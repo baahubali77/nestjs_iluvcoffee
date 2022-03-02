@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, NotFoundException, Param, Patch, Post, Query } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
@@ -70,27 +71,26 @@ export class CoffeesController {
     //     return `First pagination Request with Limit : ${limit} and Offfset : ${offset}`;
     // }
 
-    
-    constructor(private readonly coffeeService: CoffeesService) { }
-    
-      @Get()
-    findAll() {
-          return this.coffeeService.findAll();
-    }
 
-     @Get(':id')
-     findOne(@Param('id') id: string) {
-         
-        //  throw 'A random Error';
-         const currCoffee = this.coffeeService.findOne(id);
-         
-         if (!currCoffee) {
+constructor(private readonly coffeeService: CoffeesService) { }
+
+@Get()
+findAll(@Query() paginationQuery : PaginationQueryDto) {
+      return this.coffeeService.findAll(paginationQuery);
+}
+
+@Get(':id')
+findOne(@Param('id') id: string) {
+
+      //  throw 'A random Error';
+      const currCoffee = this.coffeeService.findOne(id);
+      
+      if (!currCoffee) {
             //  throw new HttpException(`Coffee Not found ${id}`, HttpStatus.NOT_FOUND); 
-             throw new NotFoundException(`Coffee Not found ${id}`); 
-             
-         }
+            throw new NotFoundException(`Coffee Not found ${id}`);
+      }
 
-         return currCoffee;
+      return currCoffee;
     }
 
     @Post()
@@ -99,13 +99,13 @@ export class CoffeesController {
     }
 
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateCoffeeDto:UpdateCoffeeDto) {
-          return this.coffeeService.update(id, updateCoffeeDto);
-    }
+@Patch(':id')
+update(@Param('id') id: string, @Body() updateCoffeeDto:UpdateCoffeeDto) {
+      return this.coffeeService.update(id, updateCoffeeDto);
+}
 
-    @Delete(':id')
-    delete(@Param('id') id: string) {
-         return this.coffeeService.remove(id);
-    }
+@Delete(':id')
+delete(@Param('id') id: string) {
+      return this.coffeeService.remove(id);
+}
 }
