@@ -43,13 +43,13 @@ export class CoffeesController {
     //     return body
     // }
 
-    
+
     // @Post()
     // @HttpCode(HttpStatus.GONE) //Used to send coustmise status code
     // create(@Body('name') body) {
     //     return body
     // }
-    
+
     // @Patch(':id')
     // update(@Param('id') id: string, @Body() body) {
     //     return `It update the ${id} coffee`
@@ -60,7 +60,7 @@ export class CoffeesController {
     //     return `It delete the ${id} coffee`
     // }
 
-    
+
     //Pagination is used to filter or get a particular no of requests to make our request faster
     //path : http://localhost:3000/coffees ; Output : First pagination Request with Limit : undefined and Offfset : undefined
     //path :  http://localhost:3000/coffees?limit=20&offset=10; Output : First pagination Request with Limit : 20 and Offfset : 10
@@ -91,12 +91,12 @@ findOne(@Param('id') id: string) {
       }
 
       return currCoffee;
-    }
+}
 
-    @Post()
-    create(@Body() createCoffeeDto :CreateCoffeeDto) {
-           return this.coffeeService.create(createCoffeeDto);
-    }
+@Post()
+create(@Body() createCoffeeDto :CreateCoffeeDto) {
+      return this.coffeeService.create(createCoffeeDto);
+}
 
 
 @Patch(':id')
